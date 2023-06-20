@@ -1,0 +1,67 @@
+{% extends 'main.html' %}
+{% load crispy_forms_tags %}
+{% block content %}
+    <div class="row">
+        {% include "message.html" %}
+        
+        {% if not about %}
+            <div class="col-md-12">
+                <div class="card">
+                    <div class="card-header">
+                        <h3>Create Post</h3>
+                    </div>
+                    <div class="card-body">
+                        <form action="" method="POST">
+                            {% csrf_token %}
+                            <div class="row">
+                                <div class="col-md-6">
+                                    {{forms.name|as_crispy_field}}
+                                </div>
+                                <div class="col-md-6">
+                                    {{forms.birthday|as_crispy_field}}
+                                </div>
+                                <div class="col-md-12">
+                                    {{forms.email|as_crispy_field}}
+                                    {{forms.phone|as_crispy_field}}
+                                    {{forms.address|as_crispy_field}}
+                                    {{forms.description|as_crispy_field}}
+                                </div>
+                            </div>
+                            <button type="submit" class="btn btn-sm btn-primary">Create</button>
+                    </form>
+                    </div>
+                </div>
+            </div>
+        {% else %}
+            <div class="col-md-12">
+                <div class="card">
+                    <div class="card-header">
+                        <h3>Edit Post</h3>
+                    </div>
+                    <div class="card-body">
+                        <form action="" method="POST">
+                            {% csrf_token %}
+                            <div class="row">
+                                <div class="col-md-6">
+                                    {{forms.name|as_crispy_field}}
+                                </div>
+                                <div class="col-md-6">
+                                    {{forms.birthday|as_crispy_field}}
+                                </div>
+                                <div class="col-md-12">
+                                    {{forms.email|as_crispy_field}}
+                                    {{forms.phone|as_crispy_field}}
+                                    {{forms.address|as_crispy_field}}
+                                    {{forms.description|as_crispy_field}}
+                                </div>
+                            </div>
+                            <button type="submit" class="btn btn-sm btn-primary">Update</button>
+                            <a href="{% url 'about-delete' about %}" type="submit" class="btn btn-sm btn-danger">Delete</a>
+                    </form>
+                    </div>
+                </div>
+            </div>
+        {% endif %}
+    </div>
+
+{% endblock content %}

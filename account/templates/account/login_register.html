@@ -1,0 +1,64 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+     <meta charset="UTF-8">
+     <meta http-equiv="X-UA-Compatible" content="IE=edge">
+     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+     <!-- Bootstrap Offline -->
+     <link rel="stylesheet" href="{% static 'bootstrap/css/bootstrap.min.css' %}">
+     <title>Document</title>
+
+     <style>
+          .login--wraper{
+     display: flex;
+     height: 60vh;
+     align-items: center;
+     justify-content: center;
+     }
+
+     form {
+          width: 600px;
+     }
+     </style>
+</head>
+<body>
+     <div class="container mt-5">
+          <div class="login--wraper">
+               {% if page == 'login' %}
+               <form method = "post" class="form">
+                    {% csrf_token %}
+                    <h2>Login</h2>
+                    <p>You must login this app to see photoes and posts.</p>
+                    <div class="mb-3 mt-5">
+                         <label for="" class="form-label">UserName</label>
+                         <input type="text" name="username" id="" class="form-control" placeholder="" aria-describedby="helpId">
+                       </div>
+                       <div class="mb-3">
+                         <label for="" class="form-label">Password</label>
+                         <input type="password" class="form-control" name="password" id="" placeholder="">
+                       </div>
+                    <button type="submit" class="btn btn-primary">Submit</button>
+                    <p>Don't have an account <a href="{% url 'register'  %}">Register</a></p>
+               </form>
+               {% else %}
+               <form method="POST" class="form">
+                    {% csrf_token %}
+                    <h3>Register</h3>
+                    {% for field in form %}
+                         <div class="mb-3">
+                              <label for="" class="form-label">{{field.label}}</label>
+                              {{field}}
+                         </div>
+                    {% endfor %}
+                    <button type="submit" class="btn btn-primary">Register</button>
+                    <p>Already have an accout! <a href="{% url 'login' %}">Login</a></p>
+               </form>
+               {% endif %}
+          </div>
+     </div>
+
+     <script src="{% static 'bootstrap/js/bootstrap.min.js' %}"></script>
+</body>
+</html>
