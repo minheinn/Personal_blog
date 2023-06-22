@@ -12,12 +12,27 @@ def homePage(request):
     texts = json.dumps(list(text))
     
     abouts = About.objects.all()
+    facts = Fact.objects.all()
     skills = Skill.objects.all()
+    galleries = Gallery.objects.all()
     blogs = MyBlog.objects.all()[1:4]
-    
-    context = {'texts':texts, 'abouts':abouts, 'skills':skills, 'blogs':blogs}
-    return render(request, 'frontend/home.html', context)
+    if request.method == "POST":
+        name = request.POST.get('name')
+        email = request.POST.get('email')
+        subject = request.POST.get('subject')
+        message = request.POST.get('message')
 
+        Contact.objects.create(
+            name = name,
+            email = email,
+            subject = subject,
+            message = message,
+        )
+        return redirect('home')
+    context = {'forms':forms}
+    
+    context = {'texts':texts, 'abouts':abouts, 'facts':facts, 'skills':skills, 'blogs':blogs, 'galleries':galleries}
+    return render(request, 'frontend/home.html', context)
 
 
 # Backend start here!!!
@@ -26,6 +41,86 @@ def indexPage(request):
     abouts = About.objects.all()
     context = {'abouts':abouts}
     return render(request, 'backend/index.html', context)
+
+
+# TypeWritter Page start here!!!
+@login_required (login_url='login')
+def typewitterPage(request):
+    page = "typerwritter-create"
+    abouts = About.objects.all()
+    forms = TypeWritterForm()
+    texts = TypeWritter.objects.all()
+    if request.method == 'POST':
+        form = TypeWritterForm(request.POST)
+        if form.is_valid():
+            form.save()
+            messages.success(request, "Your Add TyperWritter is sucessfully!" )
+            return redirect('typewritter')
+    context = {'page':page,'forms':forms, 'texts':texts, 'abouts':abouts}
+    return render(request, 'backend/typewritter/typewritter.html', context)
+
+@login_required (login_url='login')
+def typewritterEdit(request, pk):
+    text = TypeWritter.objects.get(id=pk)
+    texts = TypeWritter.objects.all()
+    forms = TypeWritterForm(instance=text)
+    if request.method == "POST":
+        form = TypeWritterForm(request.POST, instance=text)
+        if form.is_valid():
+            form.save()
+            messages.success(request, "Your Update Typerwritter is sucessfully!" )
+            return redirect('typewritter')
+    context = {'text':text, 'forms':forms, 'texts':texts}
+    return render(request, 'backend/typewritter/typewritter.html', context)
+
+@login_required (login_url='login')
+def typewritterDelete(request,pk):
+    text = TypeWritter.objects.get(id=pk)
+    if request.method == "POST":
+        text.delete()
+        messages.success(request, "Your Delete TypeWritter is sucessfully!" )
+        return redirect('typewritter')    
+    return render(request, 'backend/typewritter/delete.html')
+# Typerwritter Page end here!!!
+
+# Facts Page start here!!!
+@login_required (login_url='login')
+def factPage(request):
+    page = "fact-create"
+    facts = Fact.objects.all()
+    fact = Fact.objects.first()
+    if not fact:
+        forms = FactForm()
+        if request.method == "POST":
+            form = FactForm(request.POST)
+            if form.is_valid():
+                form.save()
+                messages.success(request, 'Your Fact add is sucessfully!')
+                return redirect('fact')
+        context = {'forms':forms, 'fact':fact, 'page':page}
+        return render(request, 'backend/fact/fact.html', context)
+    else:
+        fact = Fact.objects.latest('id')
+        forms = FactForm(instance=fact)
+        if request.method == "POST":
+            form = FactForm(request.POST, instance=fact)
+            if form.is_valid():
+                form.save()
+                messages.success(request, "Your Edit Fact is sucessfully!" )
+                return redirect('fact')
+        context = {'fact':fact, 'forms':forms,'page':page, 'facts':facts}
+        return render(request, 'backend/fact/fact.html', context)
+        
+@login_required (login_url='login')
+def factDelete(request, pk):
+    fact = Fact.objects.latest('id')
+    if request.method == "POST":
+        fact.delete()
+        messages.success(request, "Your Delete About is sucessfully!" )
+        return redirect('fact')
+    context = {'fact':fact}
+    return render(request, 'backend/fact/delete.html', context)
+# Facts Page end here!!!
 
 # AboutPage start here!!!!!
 @login_required (login_url='login')
@@ -67,45 +162,6 @@ def aboutDelete(request, pk):
 
 # AboutPage end here!!!
 
-# TypeWritter Page start here!!!
-@login_required (login_url='login')
-def typewitterPage(request):
-    page = "typerwritter-create"
-    abouts = About.objects.all()
-    forms = TypeWritterForm()
-    texts = TypeWritter.objects.all()
-    if request.method == 'POST':
-        form = TypeWritterForm(request.POST)
-        if form.is_valid():
-            form.save()
-            messages.success(request, "Your Add TyperWritter is sucessfully!" )
-            return redirect('typewritter')
-    context = {'page':page,'forms':forms, 'texts':texts, 'abouts':abouts}
-    return render(request, 'backend/typewritter/typewritter.html', context)
-
-@login_required (login_url='login')
-def typewritterEdit(request, pk):
-    text = TypeWritter.objects.get(id=pk)
-    texts = TypeWritter.objects.all()
-    forms = TypeWritterForm(instance=text)
-    if request.method == "POST":
-        form = TypeWritterForm(request.POST, instance=text)
-        if form.is_valid():
-            form.save()
-            messages.success(request, "Your Update Typerwritter is sucessfully!" )
-            return redirect('typewritter')
-    context = {'text':text, 'forms':forms, 'texts':texts}
-    return render(request, 'backend/typewritter/typewritter.html', context)
-
-@login_required (login_url='login')
-def typewritterDelete(request,pk):
-    text = TypeWritter.objects.get(id=pk)
-    if request.method == "POST":
-        text.delete()
-        messages.success(request, "Your Delete TypeWritter is sucessfully!" )
-        return redirect('typewritter')    
-    return render(request, 'backend/typewritter/delete.html')
-# Typerwritter Page end here!!!
 
 
 # skillPage start here!!!
@@ -152,6 +208,46 @@ def skillDelete(request, pk):
     return render(request, 'backend/skill/delete.html', context)
 # skillPage end here!!!
 
+# Gallery Page start here!!!
+@login_required (login_url='login')
+def galleryPage(request):
+    abouts = About.objects.all()
+    page = "gallery-create"
+    forms = GalleryForm()
+    galleries = Gallery.objects.all()
+    if request.method == "POST":
+        form = GalleryForm(request.POST, request.FILES)
+        form.is_valid()
+        form.save()
+        messages.success(request, "Your Add Gallery is sucessfully!" )
+        return redirect('gallery')
+    context = {'page':page,'forms':forms, 'galleries':galleries, 'abouts':abouts}
+    return render(request, 'backend/gallery/gallery.html', context)
+
+@login_required (login_url='login')
+def galleryEdit(request, pk):
+    gallery = Gallery.objects.get(id=pk)
+    galleries = Gallery.objects.all()
+    forms = GalleryForm(instance=gallery)
+    if request.method == "POST":
+        form = GalleryForm(request.POST, request.FILES, instance=gallery)
+        if form.is_valid():
+            form.save()
+            messages.success(request, "Your Update Gallery is sucessfully!" )
+            return redirect('gallery')
+    context ={'gallery':gallery, 'galleries':galleries, 'forms':forms}
+    return render(request, 'backend/gallery/gallery.html', context)
+
+@login_required (login_url='login')
+def galleryDelete(request, pk):
+    gallery = Gallery.objects.get(id=pk)
+    if request.method == "POST":
+        gallery.delete()
+        messages.success(request, "Your Delete Gallery is sucessfully!")
+        return redirect('gallery')
+    return render(request, 'backend/gallery/delete.html')
+# Gallery Page end here!!!
+
 
 #Myblog Page Start here!!!
 def myblogPage(request):
@@ -191,3 +287,19 @@ def myblogDelete(request, pk):
     context = {'blog':blog}
     return render(request, 'backend/myblog/delete.html', context)
 #Myblog Page End here!!!
+
+#Contact Page Start here!!!
+def contactPage(request):
+    contacts = Contact.objects.all()
+    context = {'contacts':contacts}
+    return render(request, 'backend/contact/contact.html', context)
+
+def contactDelete(request, pk):
+    contact = Contact.objects.get(id=pk)
+    if request.method == "POST":
+        contact.delete()
+        messages.success(request, "Your Delete Contact is sucessfully!" )
+        return redirect('contact')
+    context = {'contact':contact}
+    return render(request, 'backend/contact/delete.html', context)
+#Contact Page End here!!!

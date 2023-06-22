@@ -1,38 +1,36 @@
 {% extends 'main.html' %}
 {% load crispy_forms_tags %}
 {% block content %}
+{% include 'message.html' %}
     <div class="row">
-        {% include "message.html" %}
-        
-        {% if not about %}
+        {% if not fact %}
             <div class="col-md-12">
                 <div class="card">
                     <div class="card-header">
-                        <h3>Create Post</h3>
+                        <h3>Create Facts</h3>
                     </div>
                     <div class="card-body">
                         <form action="" method="POST">
                             {% csrf_token %}
                             <div class="row">
                                 <div class="col-md-6">
-                                    {{forms.name|as_crispy_field}}
+                                    {{forms.happy_client|as_crispy_field}}                            
                                 </div>
                                 <div class="col-md-6">
-                                    {{forms.birthday|as_crispy_field}}
+                                    {{forms.project|as_crispy_field}}                            
                                 </div>
                                 <div class="col-md-6">
-                                    {{forms.email|as_crispy_field}}
+                                    {{forms.cup_of_coffee|as_crispy_field}}                            
                                 </div>
                                 <div class="col-md-6">
-                                    {{forms.phone|as_crispy_field}}
+                                    {{forms.award|as_crispy_field}}                            
                                 </div>
                                 <div class="col-md-12">
-                                    {{forms.address|as_crispy_field}}
-                                    {{forms.description|as_crispy_field}}
+                                    {{forms.fact_description|as_crispy_field}}
                                 </div>
                             </div>
                             <button type="submit" class="btn btn-sm btn-primary">Create</button>
-                    </form>
+                        </form>
                     </div>
                 </div>
             </div>
@@ -40,36 +38,35 @@
             <div class="col-md-12">
                 <div class="card">
                     <div class="card-header">
-                        <h3>Edit Post</h3>
+                        <h3>Edit Facts</h3>
                     </div>
                     <div class="card-body">
                         <form action="" method="POST">
                             {% csrf_token %}
                             <div class="row">
                                 <div class="col-md-6">
-                                    {{forms.name|as_crispy_field}}
+                                    {{forms.happy_client|as_crispy_field}}                            
                                 </div>
                                 <div class="col-md-6">
-                                    {{forms.birthday|as_crispy_field}}
+                                    {{forms.project|as_crispy_field}}                            
                                 </div>
                                 <div class="col-md-6">
-                                    {{forms.email|as_crispy_field}}
+                                    {{forms.cup_of_coffee|as_crispy_field}}                            
                                 </div>
                                 <div class="col-md-6">
-                                    {{forms.phone|as_crispy_field}}
+                                    {{forms.award|as_crispy_field}}                            
                                 </div>
                                 <div class="col-md-12">
-                                    {{forms.address|as_crispy_field}}
-                                    {{forms.description|as_crispy_field}}
+                                    {{forms.fact_description|as_crispy_field}}
                                 </div>
-                            </div>
-                            <button type="submit" class="btn btn-sm btn-primary">Update</button>
-                            <a href="{% url 'about-delete' about %}" type="submit" class="btn btn-sm btn-danger">Delete</a>
-                    </form>
+                            </div>                  
+                            <button type="submit" class="btn btn-sm btn-primary"><span class="mdi mdi-pencil"></span></button>
+                            <a href="{% url 'fact-delete' fact %}" type="submit" class="btn btn-sm btn-danger"><span class="mdi mdi-delete"></span></a>
+                        </form>
                     </div>
                 </div>
             </div>
         {% endif %}
     </div>
-
+    
 {% endblock content %}

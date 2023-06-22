@@ -1,0 +1,31 @@
+<!-- ======= Blogs Section ======== -->
+<section class="ftco-section" style="padding: 60px 0 !important;" id="blog">
+    <div class="container" data-aos="fade-up">
+      <div class="section-title">
+        <h2>My Blogs</h2>
+        <p>Magnam dolores commodi suscipit. Necessitatibus eius consequatur ex aliquid fuga eum quidem. Sit sint consectetur velit. Quisquam quos quisquam cupiditate. Et nemo qui impedit suscipit alias ea. Quia fugiat sit in iste officiis commodi quidem hic quas.</p>
+      </div>
+      <div class="row d-flex">
+        {% for blog in blogs %}
+            <div class="col-md-4 d-flex ftco-animate">
+                <div class="blog-entry justify-content-end">
+                <a href="single.html" class="block-20" style="background-image: url({{blog.blog_image.url}}); height:450px;">
+                </a>
+                <div class="text mt-3 float-right d-block">
+                    <div class="d-flex align-items-center mb-3 meta">
+                    <p class="mb-0">
+                        <span class="mr-2">{{blog.created}}</span>
+                        <a href="#" class="mr-2">Admin</a>
+                        <a href="#" class="meta-chat"><span class="icon-chat"></span> 3</a>
+                    </p>
+                </div>
+                <h3 class="heading"><a href="single.html">{{blog.title}}</a></h3>
+                <p>{{blog.description|stringformat:".100s"}}</p>
+                </div>
+            </div>
+            </div>
+        {% endfor %}
+      </div>
+    </div>
+  </section>
+  <!-- ======= End Blogs Section ======== -->

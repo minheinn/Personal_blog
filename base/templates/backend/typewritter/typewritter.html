@@ -23,8 +23,8 @@
                                     <td>{{forloop.counter}}</td>
                                     <td>{{text.text}}</td>
                                     <td>
-                                        <a href="{% url 'typewritter-edit' text.id %}" class="btn btn-primary btn-sm">Edit</a>
-                                        <a href="{% url 'typewritter-delete' text.id %}" class="btn btn-danger btn-sm">Delete</a>
+                                        <a href="{% url 'typewritter-edit' text.id %}" class="btn btn-primary btn-sm"><span class="mdi mdi-pencil"></span></a>
+                                        <a href="{% url 'typewritter-delete' text.id %}" class="btn btn-danger btn-sm"><span class="mdi mdi-delete"></span></a>
                                     </td>
                                 </tr>
                             {% endfor %}

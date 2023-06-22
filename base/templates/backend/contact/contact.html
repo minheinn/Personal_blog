@@ -6,10 +6,7 @@
                 <div class="card-header">
                     <div class="row">
                         <div class="col-md-9">
-                            <h3>All Posts for My Blog</h3>
-                        </div>
-                        <div class="col-md-3">
-                            <a href="{% url 'myblog-create' %}" class="btn btn-primary btn-sm">New Add</a>
+                            <h3>All Posts for Contact</h3>
                         </div>
                     </div>
                 </div>
@@ -18,27 +15,24 @@
                         <thead>
                             <tr>
                                 <th>No</th>
-                                <th>Title</th>
-                                <th>Description</th>
-                                <th>Image</th>
-                                <!-- <th>created</th>
-                                <th>updated</th> -->
+                                <th>Name</th>
+                                <th>Email</th>
+                                <th>Subject</th>
+                                <th>Message</th>
                                 <th>Action</th>
                             </tr>
                         </thead>
                         <tbody>
-                            {% for blog in blogs %}
+                            {% for contact in contacts %}
                                 <tr>
                                     <td>{{forloop.counter}}</td>
-                                    <td>{{blog.title}}</td>
-                                    <td>{{blog.description|stringformat:".30s"}}...</td> 
-                                    <td>
-                                        <img src="{{blog.blog_image.url}}" alt="" width="20px" height="20px">
-                                    </td>
+                                    <td>{{contact.name}}</td>
+                                    <td>{{contact.email}}</td> 
+                                    <td>{{contact.subject}}</td> 
+                                    <td>{{contact.message|stringformat:".30s"}}...</td>
                                     <td>
                                         <a href="" class="btn btn-info btn-sm"><span class="mdi mdi-eye"></span></a>
-                                        <a href="{% url 'myblog-edit' blog.id %}" class="btn btn-primary btn-sm"><span class="mdi mdi-pencil"></span></a>
-                                        <a href="{% url 'myblog-delete' blog.id %}" class="btn btn-danger btn-sm"><span class="mdi mdi-delete"></span></a>
+                                        <a href="{% url 'contact-delete' contact.id %}" class="btn btn-danger btn-sm"><span class="mdi mdi-delete"></span></a>
                                     </td>
                                 </tr>
                             {% endfor %}

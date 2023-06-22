@@ -24,13 +24,6 @@
           <i class="mdi mdi-home menu-icon"></i>
         </a>
       </li>
-      {% url 'typewritter' as url %}
-      <li class="nav-item {% if request.path == url %}active{% endif %}">
-        <a class="nav-link" href="{% url 'typewritter' %}">
-          <span class="menu-title">Type Writter</span>
-          <i class="mdi mdi-table-large menu-icon"></i>
-        </a>
-      </li>
       {% url 'about' as url %}
       <li class="nav-item {% if request.path == url %}active{% endif %}">
         <a class="nav-link" href="{% url 'about' %}">
@@ -45,10 +38,31 @@
           <i class="mdi mdi-contacts menu-icon"></i>
         </a>
       </li>
+      {% url 'gallery' as url %}
+      <li class="nav-item {% if request.path == url %}active{% endif %}">
+        <a class="nav-link" href="{% url 'gallery' %}">
+          <span class="menu-title">Gallery</span>
+          <i class="mdi mdi-image-album menu-icon"></i>
+        </a>
+      </li>
+      {% url 'typewritter' as url %}
+      <li class="nav-item {% if request.path == url %}active{% endif %}">
+        <a class="nav-link" href="{% url 'typewritter' %}">
+          <span class="menu-title">Type Writter</span>
+          <i class="mdi mdi-table-large menu-icon"></i>
+        </a>
+      </li>
       {% url 'myblog' as url %}
       <li class="nav-item {% if request.path == url %}active{% endif %}">
         <a class="nav-link" href="{% url 'myblog' %}">
           <span class="menu-title">My Blogs</span>
+          <i class="mdi mdi-table-large menu-icon"></i>
+        </a>
+      </li>
+      {% url 'contact' as url %}
+      <li class="nav-item {% if request.path == url %}active{% endif %}">
+        <a class="nav-link" href="{% url 'contact' %}">
+          <span class="menu-title">Contact</span>
           <i class="mdi mdi-table-large menu-icon"></i>
         </a>
       </li>
