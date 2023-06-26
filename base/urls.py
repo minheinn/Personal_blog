@@ -28,22 +28,22 @@ urlpatterns = [
     
     # Skill
     path('skill/', views.skillPage, name="skill"),
-    path('skill/<str:pk>/edit', views.skillEdit, name="skill-edit"),
-    path('skill/<str:pk>/delete', views.skillDelete, name="skill-delete"),
+    path('skill/<slug:slug>/edit', views.skillEdit, name="skill-edit"),
+    path('skill/<slug:slug>/delete', views.skillDelete, name="skill-delete"),
     
     # Gallery
     path('gallery/', views.galleryPage, name="gallery"),
-    path('gallery/<str:pk>/edit', views.galleryEdit, name="gallery-edit"),
-    path('gallery/<str:pk>/delete', views.galleryDelete, name="gallery-delete"),
-    path('gallery/<str:pk>/view', views.galleryView, name="gallery-view"),
+    path('gallery/<slug:slug>/edit', views.galleryEdit, name="gallery-edit"),
+    path('gallery/<slug:slug>/delete', views.galleryDelete, name="gallery-delete"),
+    path('gallery/<slug:slug>/view', views.galleryView, name="gallery-view"),
     
     # MyBlog
     path('myblog/', views.myblogPage, name="myblog"),
     path('myblog/create/', views.myblogCreate, name="myblog-create"),
-    path('myblog/<str:pk>/edit/', views.myblogEdit, name="myblog-edit"),
-    path('myblog/<str:pk>/delete/', views.myblogDelete, name="myblog-delete"),
-    path('myblog/<str:pk>/view/', views.myblogView, name="myblog-view"),
-    path('myblog/<str:pk>/detail/', views.myblogDetail, name="myblog-detail"),
+    path('myblog/<slug:slug>/edit/', views.myblogEdit, name="myblog-edit"),
+    path('myblog/<slug:slug>/delete/', views.myblogDelete, name="myblog-delete"),
+    path('myblog/<slug:slug>/view/', views.myblogView, name="myblog-view"),
+    path('myblog/<slug:slug>/detail/', views.myblogDetail, name="myblog-detail"),
     
     # Contact
     path('contact/', views.contactPage, name="contact"),

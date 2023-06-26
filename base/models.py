@@ -1,5 +1,7 @@
 from django.db import models
 from ckeditor.fields import RichTextField
+from autoslug import AutoSlugField
+
 # TyperWritter Page
 class TypeWritter(models.Model):
     text = models.CharField(max_length=100, null=True)
@@ -63,9 +65,13 @@ class About(models.Model):
 class Skill(models.Model):
     name = models.CharField(max_length=50, null=True)
     skill = models.IntegerField(null=True)
-    
+    slug = AutoSlugField(populate_from='name', unique=True)
+
     def __int__(self):
        return self.name
+
+    class Meta:
+        unique_together = ('name', 'slug')
    
 # Subjects 
 SUBJECT = (
@@ -77,15 +83,20 @@ SUBJECT = (
 # Gallery
 class Gallery(models.Model):
     subject = models.CharField(max_length=3, choices=SUBJECT, null=True)
+    slug = AutoSlugField(populate_from='image', unique=True, null=True)
     image = models.ImageField(upload_to="photoes/", null=True)
     
     def __str__(self):
         return str('image')
+
+    class Meta:
+        unique_together = ('image', 'slug')
    
    
 class MyBlog(models.Model):
     # blog_description =
     title = models.CharField(max_length=255, null=True)
+    slug = AutoSlugField(populate_from='title', unique=True, null=True)
     description = RichTextField(null=True)
     blog_image = models.ImageField(upload_to="myblog_image/", null=True)
     created = models.DateTimeField(auto_now=True)
@@ -96,6 +107,10 @@ class MyBlog(models.Model):
     
     class Meta:
         ordering = ['-created', '-updated']
+
+        unique_together = ('title', 'slug')
+
+
         
 class Contact(models.Model):
     name = models.CharField(max_length=50, null=True)

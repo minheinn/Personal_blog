@@ -36,9 +36,9 @@
                                         <img src="{{blog.blog_image.url}}" alt="" width="20px" height="20px">
                                     </td>
                                     <td>
-                                        <a href="{% url 'myblog-view' blog.id %}" class="btn btn-info btn-sm"><span class="mdi mdi-eye"></span></a>
-                                        <a href="{% url 'myblog-edit' blog.id %}" class="btn btn-primary btn-sm"><span class="mdi mdi-pencil"></span></a>
-                                        <a href="{% url 'myblog-delete' blog.id %}" class="btn btn-danger btn-sm"><span class="mdi mdi-delete"></span></a>
+                                        <a href="{% url 'myblog-view' blog.slug %}" class="btn btn-info btn-sm"><span class="mdi mdi-eye"></span></a>
+                                        <a href="{% url 'myblog-edit' blog.slug %}" class="btn btn-primary btn-sm"><span class="mdi mdi-pencil"></span></a>
+                                        <a href="{% url 'myblog-delete' blog.slug %}" class="btn btn-danger btn-sm"><span class="mdi mdi-delete"></span></a>
                                     </td>
                                 </tr>
                             {% endfor %}

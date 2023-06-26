@@ -187,8 +187,8 @@ def skillPage(request):
     return render(request, 'backend/skill/skill.html', context)
 
 @login_required (login_url='login')
-def skillEdit(request, pk):
-    skill = Skill.objects.get(id=pk)
+def skillEdit(request, slug):
+    skill = Skill.objects.get(slug=slug)
     skills = Skill.objects.all()
     forms = SkillForm(instance=skill)
     if request.method == "POST":
@@ -202,8 +202,8 @@ def skillEdit(request, pk):
     return render(request, 'backend/skill/skill.html', context)
 
 @login_required (login_url='login')
-def skillDelete(request, pk):
-    skill = Skill.objects.get(id=pk)
+def skillDelete(request, slug):
+    skill = Skill.objects.get(slug=slug)
     if request.method == "POST":
         name = request.POST.get('name')
         skill.delete()
@@ -230,8 +230,8 @@ def galleryPage(request):
     return render(request, 'backend/gallery/gallery.html', context)
 
 @login_required (login_url='login')
-def galleryEdit(request, pk):
-    gallery = Gallery.objects.get(id=pk)
+def galleryEdit(request, slug):
+    gallery = Gallery.objects.get(slug=slug)
     galleries = Gallery.objects.all()
     forms = GalleryForm(instance=gallery)
     if request.method == "POST":
@@ -244,8 +244,8 @@ def galleryEdit(request, pk):
     return render(request, 'backend/gallery/gallery.html', context)
 
 @login_required (login_url='login')
-def galleryDelete(request, pk):
-    gallery = Gallery.objects.get(id=pk)
+def galleryDelete(request, slug):
+    gallery = Gallery.objects.get(slug=slug)
     if request.method == "POST":
         gallery.delete()
         messages.success(request, "Your Delete Gallery is sucessfully!")
@@ -253,8 +253,8 @@ def galleryDelete(request, pk):
     return render(request, 'backend/gallery/delete.html')
 
 @login_required (login_url='login')
-def galleryView(request, pk):
-    galleries = Gallery.objects.get(id=pk)
+def galleryView(request, slug):
+    galleries = Gallery.objects.get(slug=slug)
     context = {'galleries':galleries}
     return render(request, 'backend/gallery/view.html', context)
 # Gallery Page end here!!!
@@ -281,8 +281,8 @@ def myblogCreate(request):
     return render(request, 'backend/myblog/create.html', context)
 
 @login_required (login_url='login')
-def myblogEdit(request, pk):
-    blog = MyBlog.objects.get(id=pk)
+def myblogEdit(request, slug):
+    blog = MyBlog.objects.get(slug=slug)
     forms = MyBlogForm(instance=blog)
     if request.method == "POST":
         form = MyBlogForm(request.POST, request.FILES, instance=blog)
@@ -294,8 +294,8 @@ def myblogEdit(request, pk):
     return render(request, 'backend/myblog/edit.html', context)
 
 @login_required (login_url='login')
-def myblogDelete(request, pk):
-    blog = MyBlog.objects.get(id=pk)
+def myblogDelete(request, slug):
+    blog = MyBlog.objects.get(slug=slug)
     if request.method == "POST":
         blog.delete()
         messages.success(request, "Your Delete MyBlog is sucessfully!" )
@@ -304,19 +304,19 @@ def myblogDelete(request, pk):
     return render(request, 'backend/myblog/delete.html', context)
 
 @login_required (login_url='login')
-def myblogView(request, pk):
-    blogs = MyBlog.objects.get(id=pk)
+def myblogView(request, slug):
+    blogs = MyBlog.objects.get(slug=slug)
     context = {'blogs':blogs}
     return render(request, 'backend/myblog/view.html', context)
 
 @login_required (login_url='login')
-def myblogDetail(request,pk):
+def myblogDetail(request,slug):
     new_search = request.GET.get('search') if request.GET.get('search') != None else ''
     blogss = MyBlog.objects.filter(
         Q(title__contains = new_search)
         )
     blogs = MyBlog.objects.all()
-    blog = MyBlog.objects.get(id=pk)
+    blog = MyBlog.objects.get(slug=slug)
     context ={'blogs':blogs,'blog':blog, 'blogss':blogss}
     return render(request, 'frontend/blogdetail.html', context)
 #Myblog Page End here!!!
