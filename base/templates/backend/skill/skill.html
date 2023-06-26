@@ -24,8 +24,8 @@
                                     <td>{{forloop.counter}}</td>
                                     <td>{{skill.name}}</td>
                                     <td>{{skill.skill}} %</td>
+                                    <td>{{skill.skill_description}} %</td>
                                     <td>
-                                        <a href="" class="btn btn-info btn-sm"><span class="mdi mdi-eye"></span></a>
                                         <a href="{% url 'skill-edit' skill.id %}" class="btn btn-primary btn-sm"><span class="mdi mdi-pencil"></span></a>
                                         <a href="{% url 'skill-delete' skill.id %}" class="btn btn-danger btn-sm"><span class="mdi mdi-delete"></span></a>
                                     </td>

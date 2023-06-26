@@ -29,6 +29,7 @@ INSTALLED_APPS = [
     
     'base', #new
     'account', #new
+    'ckeditor', #new
     
     # Third Party Packages
     'crispy_forms',

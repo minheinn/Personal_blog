@@ -35,15 +35,19 @@ urlpatterns = [
     path('gallery/', views.galleryPage, name="gallery"),
     path('gallery/<str:pk>/edit', views.galleryEdit, name="gallery-edit"),
     path('gallery/<str:pk>/delete', views.galleryDelete, name="gallery-delete"),
+    path('gallery/<str:pk>/view', views.galleryView, name="gallery-view"),
     
     # MyBlog
     path('myblog/', views.myblogPage, name="myblog"),
     path('myblog/create/', views.myblogCreate, name="myblog-create"),
     path('myblog/<str:pk>/edit/', views.myblogEdit, name="myblog-edit"),
     path('myblog/<str:pk>/delete/', views.myblogDelete, name="myblog-delete"),
+    path('myblog/<str:pk>/view/', views.myblogView, name="myblog-view"),
+    path('myblog/<str:pk>/detail/', views.myblogDetail, name="myblog-detail"),
     
     # Contact
     path('contact/', views.contactPage, name="contact"),
+    path('contact/<str:pk>/view/', views.contactView, name="contact-view"),
     path('contact/<str:pk>/delete/', views.contactDelete, name="contact-delete"),
 ]
 

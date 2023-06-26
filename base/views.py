@@ -5,6 +5,7 @@ from django.contrib.auth.decorators import login_required
 from django.contrib import messages #import messages
 import json
 from django.core.paginator import Paginator,EmptyPage,PageNotAnInteger
+from django.db.models import Q
 
 # Frontend start here!!!
 def homePage(request):
@@ -38,8 +39,12 @@ def homePage(request):
 # Backend start here!!!
 @login_required (login_url='login')
 def indexPage(request):
+    texts = TypeWritter.objects.all()
     abouts = About.objects.all()
-    context = {'abouts':abouts}
+    skills = Skill.objects.all()
+    galleries = Gallery.objects.all()
+    blogs = MyBlog.objects.all()
+    context = {'texts':texts, 'abouts':abouts, 'skills':skills, 'galleries':galleries, 'blogs':blogs}
     return render(request, 'backend/index.html', context)
 
 
@@ -87,6 +92,7 @@ def typewritterDelete(request,pk):
 @login_required (login_url='login')
 def factPage(request):
     page = "fact-create"
+    abouts = About.objects.all()
     facts = Fact.objects.all()
     fact = Fact.objects.first()
     if not fact:
@@ -97,10 +103,11 @@ def factPage(request):
                 form.save()
                 messages.success(request, 'Your Fact add is sucessfully!')
                 return redirect('fact')
-        context = {'forms':forms, 'fact':fact, 'page':page}
+        context = {'abouts':abouts, 'forms':forms, 'fact':fact, 'page':page}
         return render(request, 'backend/fact/fact.html', context)
     else:
         fact = Fact.objects.latest('id')
+        abouts = About.objects.all()
         forms = FactForm(instance=fact)
         if request.method == "POST":
             form = FactForm(request.POST, instance=fact)
@@ -108,7 +115,7 @@ def factPage(request):
                 form.save()
                 messages.success(request, "Your Edit Fact is sucessfully!" )
                 return redirect('fact')
-        context = {'fact':fact, 'forms':forms,'page':page, 'facts':facts}
+        context = {'fact':fact, 'forms':forms,'page':page, 'facts':facts, 'abouts':abouts}
         return render(request, 'backend/fact/fact.html', context)
         
 @login_required (login_url='login')
@@ -161,8 +168,6 @@ def aboutDelete(request, pk):
     return render(request, 'backend/about/delete.html', context)
 
 # AboutPage end here!!!
-
-
 
 # skillPage start here!!!
 @login_required (login_url='login')
@@ -246,15 +251,24 @@ def galleryDelete(request, pk):
         messages.success(request, "Your Delete Gallery is sucessfully!")
         return redirect('gallery')
     return render(request, 'backend/gallery/delete.html')
+
+@login_required (login_url='login')
+def galleryView(request, pk):
+    galleries = Gallery.objects.get(id=pk)
+    context = {'galleries':galleries}
+    return render(request, 'backend/gallery/view.html', context)
 # Gallery Page end here!!!
 
 
 #Myblog Page Start here!!!
+@login_required (login_url='login')
 def myblogPage(request):
     blogs = MyBlog.objects.all()
-    context = {'blogs':blogs}
+    abouts = About.objects.all()
+    context = {'blogs':blogs, 'abouts':abouts}
     return render(request, 'backend/myblog/myblog.html', context)
 
+@login_required (login_url='login')
 def myblogCreate(request):
     forms = MyBlogForm()
     if request.method == "POST":
@@ -266,6 +280,7 @@ def myblogCreate(request):
     context = {'forms':forms}
     return render(request, 'backend/myblog/create.html', context)
 
+@login_required (login_url='login')
 def myblogEdit(request, pk):
     blog = MyBlog.objects.get(id=pk)
     forms = MyBlogForm(instance=blog)
@@ -278,6 +293,7 @@ def myblogEdit(request, pk):
     context = {'blog':blog, 'forms':forms}
     return render(request, 'backend/myblog/edit.html', context)
 
+@login_required (login_url='login')
 def myblogDelete(request, pk):
     blog = MyBlog.objects.get(id=pk)
     if request.method == "POST":
@@ -286,14 +302,34 @@ def myblogDelete(request, pk):
         return redirect('myblog')
     context = {'blog':blog}
     return render(request, 'backend/myblog/delete.html', context)
+
+@login_required (login_url='login')
+def myblogView(request, pk):
+    blogs = MyBlog.objects.get(id=pk)
+    context = {'blogs':blogs}
+    return render(request, 'backend/myblog/view.html', context)
+
+@login_required (login_url='login')
+def myblogDetail(request,pk):
+    new_search = request.GET.get('search') if request.GET.get('search') != None else ''
+    blogss = MyBlog.objects.filter(
+        Q(title__contains = new_search)
+        )
+    blogs = MyBlog.objects.all()
+    blog = MyBlog.objects.get(id=pk)
+    context ={'blogs':blogs,'blog':blog, 'blogss':blogss}
+    return render(request, 'frontend/blogdetail.html', context)
 #Myblog Page End here!!!
 
 #Contact Page Start here!!!
+@login_required (login_url='login')
 def contactPage(request):
+    abouts = About.objects.all()
     contacts = Contact.objects.all()
-    context = {'contacts':contacts}
+    context = {'abouts':abouts,'contacts':contacts}
     return render(request, 'backend/contact/contact.html', context)
 
+@login_required (login_url='login')
 def contactDelete(request, pk):
     contact = Contact.objects.get(id=pk)
     if request.method == "POST":
@@ -302,4 +338,10 @@ def contactDelete(request, pk):
         return redirect('contact')
     context = {'contact':contact}
     return render(request, 'backend/contact/delete.html', context)
+
+@login_required (login_url='login')
+def contactView(request, pk):
+    contact = Contact.objects.get(id=pk)
+    context = {'contact':contact}
+    return render(request, 'backend/contact/view.html', context)
 #Contact Page End here!!!

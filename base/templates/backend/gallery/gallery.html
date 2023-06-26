@@ -27,7 +27,7 @@
                                         <img src="{{gallery.image.url}}" alt="">
                                     </td>
                                     <td>
-                                        <a href="" class="btn btn-info btn-sm"><span class="mdi mdi-eye"></span></a>
+                                        <a href="{% url 'gallery-view' gallery.id %}" class="btn btn-info btn-sm"><span class="mdi mdi-eye"></span></a>
                                         <a href="{% url 'gallery-edit' gallery.id %}" class="btn btn-primary btn-sm"><span class="mdi mdi-pencil"></span></a>
                                         <a href="{% url 'gallery-delete' gallery.id %}" class="btn btn-danger btn-sm"><span class="mdi mdi-delete"></span></a>
                                     </td>

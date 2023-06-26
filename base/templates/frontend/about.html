@@ -6,7 +6,7 @@
       <div class="section-title">
         <h2>About</h2>
         {% for about in abouts %}
-          <p>{{about.description}}</p>
+          <p>{{about.description|safe}}</p>
         {% endfor %}
       </div>
 

@@ -1,5 +1,5 @@
 from django.db import models
-
+from ckeditor.fields import RichTextField
 # TyperWritter Page
 class TypeWritter(models.Model):
     text = models.CharField(max_length=100, null=True)
@@ -9,7 +9,7 @@ class TypeWritter(models.Model):
     
 # Facts 
 class Fact(models.Model):
-    fact_description = models.TextField(null=True, blank=True)
+    fact_description = RichTextField(null=True, blank=True)
     happy_client = models.IntegerField(null=True)
     project = models.IntegerField(null=True)
     cup_of_coffee = models.IntegerField(null=True)
@@ -40,7 +40,7 @@ class About(models.Model):
     email = models.EmailField(null=True)
     phone = models.CharField(max_length=15, null=True)
     address = models.CharField(max_length=100, null=True)
-    description = models.TextField(null=True, blank=True)
+    description = RichTextField(null=True, blank=True)
     created = models.DateTimeField(auto_now=True)
     updated = models.DateTimeField(auto_now_add=True)
 
@@ -86,7 +86,7 @@ class Gallery(models.Model):
 class MyBlog(models.Model):
     # blog_description =
     title = models.CharField(max_length=255, null=True)
-    description = models.TextField(null=True)
+    description = RichTextField(null=True)
     blog_image = models.ImageField(upload_to="myblog_image/", null=True)
     created = models.DateTimeField(auto_now=True)
     updated = models.DateTimeField(auto_now_add=True)
