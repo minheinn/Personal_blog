@@ -56,7 +56,7 @@ class GalleryForm(forms.ModelForm):
         fields = "__all__"
         widgets = {
             'subject':forms.Select(attrs=({'class':'custom_input'})),
-            'image':forms.FileInput(attrs=({'placeholder':'Choice image...', 'class':'custom-input'})),
+            'image':forms.FileInput(attrs=({"placeholder":"Image", "id":"image", "onchange":"getImagePreview(event)"})),
         }
         
 # My Blog

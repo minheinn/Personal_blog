@@ -49,6 +49,7 @@
                             {% csrf_token %}
                             {{forms.subject|as_crispy_field}}
                             {{forms.image|as_crispy_field}}
+                            <div class="col-md-6" id="preview"></div>
 
                             <button type="submit" class="btn btn-primary btn-sm">Create</button>
                         </form>
@@ -66,6 +67,7 @@
                             {% csrf_token %}
                             {{forms.subject|as_crispy_field}}
                             {{forms.image|as_crispy_field}}
+                            <div class="col-md-6" id="preview"></div>
 
                             <button type="submit" class="btn btn-primary btn-sm">Update</button>
                         </form>
@@ -74,4 +76,17 @@
             </div>
         {% endif %}
     </div>
+
+    <script>
+        function getImagePreview(event)
+        {
+            var image = URL.createObjectURL(event.target.files[0]);
+            var imagediv = document.getElementById('preview');
+            var newimg = document.createElement('img');
+            imagediv.innerHTML = '';
+            newimg.src = image;
+            newimg.width = "300";
+            imagediv.appendChild(newimg);
+        }
+    </script>
 {% endblock content %}
