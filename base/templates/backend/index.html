@@ -122,7 +122,7 @@
                             <td>
                               <img src="{{blog.blog_image.url}}" alt="">
                             </td>
-                            <td>{{blog.description|stringformat:".10s"}}...</td>
+                            <td>{{blog.description|stringformat:".10s"|safe}}...</td>
                         </tr>
                     {% endfor %}
                 </tbody>

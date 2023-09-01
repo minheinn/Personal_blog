@@ -47,12 +47,12 @@
 
     <nav id="navbar" class="navbar nav-menu">
       <ul>
-        <li><a href="{% url 'home' %}" class="nav-link scrollto active"><i class="bx bx-home"></i> <span>Home</span></a></li>
+        <li><a href="{% url 'home' %}" class="nav-link scrollto"><i class="bx bx-home"></i> <span>Home</span></a></li>
         <li><a href="{% url 'home' %}" class="nav-link scrollto"><i class="bx bx-user"></i> <span>About</span></a></li>
         <li><a href="{% url 'home' %}" class="nav-link scrollto"><i class="bx bx-file-blank"></i> <span>Resume</span></a></li>
         <li><a href="{% url 'home' %}" class="nav-link scrollto"><i class="bx bx-images"></i> <span>Gallery</span></a></li>
         <li><a href="{% url 'home' %}" class="nav-link scrollto"><i class="bx bx-server"></i> <span>Services</span></a></li>
-        <li><a href="{% url 'home' %}" class="nav-link scrollto"><i class="bx bxl-blogger"></i> <span>Blogs</span></a></li>
+        <li><a href="{% url 'home' %}" class="nav-link scrollto active"><i class="bx bxl-blogger"></i> <span>Blogs</span></a></li>
         <li><a href="{% url 'home' %}" class="nav-link scrollto"><i class="bx bx-envelope"></i> <span>Contact</span></a></li>
       </ul>
     </nav><!-- .nav-menu -->
@@ -93,17 +93,17 @@
   
           <div class="sidebar-box ftco-animate">
             <h3 class="heading-sidebar">Recent Blog</h3>
+            <hr>
             {% for blog in blogs %}
               <div class="block-21 mb-4 d-flex">
-                <a href="{% url 'myblog-detail' blog.slug %}" class="blog-img mr-4" style="background-image: url({{blog.blog_image.url}}); width:120px; height:140px; border-radius:0;"></a>
+                <a href="{% url 'myblog-detail' blog.slug %}" class="blog-img mr-4" style="background-image: url({{blog.blog_image.url}}); width:120px; height:140px; border-radius:0; margin-right: 15px !important"></a>
                 <div class="text">
                   <h3 class="heading">
                     <a href="{% url 'myblog-detail' blog.slug %}">{{blog.title}}</a>
                   </h3>
                   <div class="meta">
                     <div><a href="{% url 'myblog-detail' blog.slug %}"><i class='bx bxs-calendar'></i>{{blog.created}}</a></div>
-                    <!-- <div><a href="#"><i class='bx bxs-message-detail'></i> 19</a></div> -->
-                    <div class="pt-3"><p style="padding-left: 25px;"><a href="{% url 'myblog-detail' blog.slug %}" style="text-transform: lowercase; color:white;">{{blog.description|stringformat:".80s"}}...</a></p></a></div>
+                    <div><a href="{% url 'myblog-detail' blog.slug %}" style="text-transform: lowercase; color:white;">{{blog.description|safe|truncatechars:70}}</a></div>
                   </div>
                 </div>
               </div>

@@ -16,7 +16,7 @@ def homePage(request):
     facts = Fact.objects.all()
     skills = Skill.objects.all()
     galleries = Gallery.objects.all()
-    blogs = MyBlog.objects.all()[1:4]
+    blogs = MyBlog.objects.all()[0:3]
     if request.method == "POST":
         name = request.POST.get('name')
         email = request.POST.get('email')
@@ -65,8 +65,8 @@ def typewitterPage(request):
     return render(request, 'backend/typewritter/typewritter.html', context)
 
 @login_required (login_url='login')
-def typewritterEdit(request, pk):
-    text = TypeWritter.objects.get(id=pk)
+def typewritterEdit(request, slug):
+    text = TypeWritter.objects.get(slug=slug)
     texts = TypeWritter.objects.all()
     forms = TypeWritterForm(instance=text)
     if request.method == "POST":
@@ -79,8 +79,8 @@ def typewritterEdit(request, pk):
     return render(request, 'backend/typewritter/typewritter.html', context)
 
 @login_required (login_url='login')
-def typewritterDelete(request,pk):
-    text = TypeWritter.objects.get(id=pk)
+def typewritterDelete(request,slug):
+    text = TypeWritter.objects.get(slug=slug)
     if request.method == "POST":
         text.delete()
         messages.success(request, "Your Delete TypeWritter is sucessfully!" )
@@ -315,7 +315,7 @@ def myblogDetail(request,slug):
     blogss = MyBlog.objects.filter(
         Q(title__contains = new_search)
         )
-    blogs = MyBlog.objects.all()
+    blogs = MyBlog.objects.all().exclude(slug=slug)
     blog = MyBlog.objects.get(slug=slug)
     context ={'blogs':blogs,'blog':blog, 'blogss':blogss}
     return render(request, 'frontend/blogdetail.html', context)

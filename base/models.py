@@ -1,10 +1,29 @@
 from django.db import models
 from ckeditor.fields import RichTextField
 from autoslug import AutoSlugField
+from django.utils.crypto import get_random_string
+from django.utils.text import slugify
+
+def unique_slugify(instance, slug):
+        model = instance.__class__
+        unique_slug = slug
+        while model.objects.filter(slug=unique_slug).exists():
+            unique_slug = slug + get_random_string(length=4)
+        return unique_slug
 
 # TyperWritter Page
 class TypeWritter(models.Model):
     text = models.CharField(max_length=100, null=True)
+    slug = models.SlugField(max_length=255, null=False,blank=True,unique=True,editable=False,)
+
+    def save(self, *args, **kwargs):
+        if not self.slug: # If the slug is not set
+            self.slug = unique_slugify(self,slugify(self.text,allow_unicode=True)) # Generate the slug from the title
+        else:
+            new_slug = unique_slugify(self,slugify(self.text,allow_unicode=True))
+            if self.slug != new_slug: # Check if the title has changed
+                self.slug = new_slug # Update the slug with the new value
+        super().save(*args, **kwargs) # Call the parent save method
     
     def __str__(self):
         return self.text
@@ -65,13 +84,19 @@ class About(models.Model):
 class Skill(models.Model):
     name = models.CharField(max_length=50, null=True)
     skill = models.IntegerField(null=True)
-    slug = AutoSlugField(populate_from='name', unique=True)
+    slug = models.SlugField(max_length=255, null=False,blank=True,unique=True,editable=False,)
+
+    def save(self, *args, **kwargs):
+        if not self.slug: # If the slug is not set
+            self.slug = unique_slugify(self,slugify(self.name,allow_unicode=True)) # Generate the slug from the title
+        else:
+            new_slug = unique_slugify(self,slugify(self.name,allow_unicode=True))
+            if self.slug != new_slug: # Check if the title has changed
+                self.slug = new_slug # Update the slug with the new value
+        super().save(*args, **kwargs) # Call the parent save method
 
     def __int__(self):
        return self.name
-
-    class Meta:
-        unique_together = ('name', 'slug')
    
 # Subjects 
 SUBJECT = (
@@ -83,32 +108,46 @@ SUBJECT = (
 # Gallery
 class Gallery(models.Model):
     subject = models.CharField(max_length=3, choices=SUBJECT, null=True)
-    slug = AutoSlugField(populate_from='image', unique=True, null=True)
     image = models.ImageField(upload_to="photoes/", null=True)
+    slug = models.SlugField(max_length=255, null=True,blank=True,unique=True,editable=False,)
+
+    def save(self, *args, **kwargs):
+        if not self.slug: # If the slug is not set
+            self.slug = unique_slugify(self,slugify(self.subject,allow_unicode=True)) # Generate the slug from the title
+        else:
+            new_slug = unique_slugify(self,slugify(self.subject,allow_unicode=True))
+            if self.slug != new_slug: # Check if the title has changed
+                self.slug = new_slug # Update the slug with the new value
+        super().save(*args, **kwargs) # Call the parent save method
     
     def __str__(self):
         return str('image')
 
-    class Meta:
-        unique_together = ('image', 'slug')
    
    
 class MyBlog(models.Model):
     # blog_description =
     title = models.CharField(max_length=255, null=True)
-    slug = AutoSlugField(populate_from='title', unique=True, null=True)
     description = RichTextField(null=True)
     blog_image = models.ImageField(upload_to="myblog_image/", null=True)
     created = models.DateTimeField(auto_now=True)
     updated = models.DateTimeField(auto_now_add=True)
+    slug = models.SlugField(max_length=255, null=True,blank=True,unique=True,editable=False,)
+
+    def save(self, *args, **kwargs):
+        if not self.slug: # If the slug is not set
+            self.slug = unique_slugify(self,slugify(self.title,allow_unicode=True)) # Generate the slug from the title
+        else:
+            new_slug = unique_slugify(self,slugify(self.title,allow_unicode=True))
+            if self.slug != new_slug: # Check if the title has changed
+                self.slug = new_slug # Update the slug with the new value
+        super().save(*args, **kwargs) # Call the parent save method
     
     def __str__(self):
         return self.title
     
     class Meta:
         ordering = ['-created', '-updated']
-
-        unique_together = ('title', 'slug')
 
 
         

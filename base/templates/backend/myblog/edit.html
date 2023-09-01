@@ -16,7 +16,8 @@
             <div class="card-body">
                 <form action="" method="POST" enctype="multipart/form-data">
                     {% csrf_token %}
-                        {{forms.title|as_crispy_field}}                          
+                        {{forms.title|as_crispy_field}}  
+                        {{forms.media}}                        
                         {{forms.description|as_crispy_field}}                          
                         {{forms.blog_image|as_crispy_field}}                                                   
                     <button type="submit" class="btn btn-sm btn-primary">Update</button>

@@ -14,8 +14,8 @@ urlpatterns = [
     
     # TypeWritter
     path('typewritter/', views.typewitterPage, name="typewritter"),
-    path('typewritter/<str:pk>/edit', views.typewritterEdit, name="typewritter-edit"),
-    path('typewritter/<str:pk>/delete', views.typewritterDelete, name="typewritter-delete"),
+    path('typewritter/<slug:slug>/edit', views.typewritterEdit, name="typewritter-edit"),
+    path('typewritter/<slug:slug>/delete', views.typewritterDelete, name="typewritter-delete"),
     
     # Fact
     path('fact/', views.factPage, name = "fact"),
