@@ -59,7 +59,7 @@ def typewitterPage(request):
         form = TypeWritterForm(request.POST)
         if form.is_valid():
             form.save()
-            messages.success(request, "Your Add TyperWritter is sucessfully!" )
+            messages.success(request, "Your Added TyperWritter is sucessfully!" )
             return redirect('typewritter')
     context = {'page':page,'forms':forms, 'texts':texts, 'abouts':abouts}
     return render(request, 'backend/typewritter/typewritter.html', context)
@@ -73,7 +73,7 @@ def typewritterEdit(request, slug):
         form = TypeWritterForm(request.POST, instance=text)
         if form.is_valid():
             form.save()
-            messages.success(request, "Your Update Typerwritter is sucessfully!" )
+            messages.success(request, "Your Updated Typerwritter is sucessfully!" )
             return redirect('typewritter')
     context = {'text':text, 'forms':forms, 'texts':texts}
     return render(request, 'backend/typewritter/typewritter.html', context)
@@ -83,7 +83,7 @@ def typewritterDelete(request,slug):
     text = TypeWritter.objects.get(slug=slug)
     if request.method == "POST":
         text.delete()
-        messages.success(request, "Your Delete TypeWritter is sucessfully!" )
+        messages.success(request, "Your Deleted TypeWritter is sucessfully!" )
         return redirect('typewritter')    
     return render(request, 'backend/typewritter/delete.html')
 # Typerwritter Page end here!!!
@@ -101,7 +101,7 @@ def factPage(request):
             form = FactForm(request.POST)
             if form.is_valid():
                 form.save()
-                messages.success(request, 'Your Fact add is sucessfully!')
+                messages.success(request, 'Your added Fact is sucessfully!')
                 return redirect('fact')
         context = {'abouts':abouts, 'forms':forms, 'fact':fact, 'page':page}
         return render(request, 'backend/fact/fact.html', context)
@@ -113,7 +113,7 @@ def factPage(request):
             form = FactForm(request.POST, instance=fact)
             if form.is_valid():
                 form.save()
-                messages.success(request, "Your Edit Fact is sucessfully!" )
+                messages.success(request, "Your Edited Fact is sucessfully!" )
                 return redirect('fact')
         context = {'fact':fact, 'forms':forms,'page':page, 'facts':facts, 'abouts':abouts}
         return render(request, 'backend/fact/fact.html', context)
@@ -123,7 +123,7 @@ def factDelete(request, pk):
     fact = Fact.objects.latest('id')
     if request.method == "POST":
         fact.delete()
-        messages.success(request, "Your Delete About is sucessfully!" )
+        messages.success(request, "Your Deleted Fact is sucessfully!" )
         return redirect('fact')
     context = {'fact':fact}
     return render(request, 'backend/fact/delete.html', context)
@@ -141,7 +141,7 @@ def aboutPage(request):
             form = AboutForm(request.POST)
             if form.is_valid():
                 form.save()
-                messages.success(request, 'Your About add is sucessfully!')
+                messages.success(request, 'Your About added is sucessfully!')
                 return redirect('about')
         context = {'forms':forms, 'about':about, 'page':page}
         return render(request, 'backend/about/about.html', context)
@@ -152,7 +152,7 @@ def aboutPage(request):
             form = AboutForm(request.POST, instance=about)
             if form.is_valid():
                 form.save()
-                messages.success(request, "Your Edit About is sucessfully!" )
+                messages.success(request, "Your About Edited is sucessfully!" )
                 return redirect('about')
         context = {'about':about, 'about':about, 'forms':forms,'page':page, 'abouts':abouts}
         return render(request, 'backend/about/about.html', context)
@@ -162,7 +162,7 @@ def aboutDelete(request, pk):
     about = About.objects.latest('id')
     if request.method == "POST":
         about.delete()
-        messages.success(request, "Your Delete About is sucessfully!" )
+        messages.success(request, "Your About Delete is sucessfully!" )
         return redirect('about')
     context = {'about':about}
     return render(request, 'backend/about/delete.html', context)
@@ -181,7 +181,7 @@ def skillPage(request):
         form = SkillForm(request.POST)
         if form.is_valid():
             form.save()
-            messages.success(request, "Your  {} add Skill is sucessfully!".format(name) )
+            messages.success(request, "Your added Skill is sucessfully!".format(name) )
             return redirect('skill')
     context = {'forms':forms, 'skills':skills, 'page':page, 'abouts':abouts}
     return render(request, 'backend/skill/skill.html', context)
@@ -196,7 +196,7 @@ def skillEdit(request, slug):
         form = SkillForm(request.POST, instance=skill)
         if form.is_valid():
             form.save()
-            messages.success(request, "Your Edit {} is sucessfully!".format(name) )
+            messages.success(request, "Your Edited is sucessfully!".format(name) )
             return redirect('skill')
     context = {'skill':skill, 'skills':skills, 'forms':forms}
     return render(request, 'backend/skill/skill.html', context)
@@ -207,7 +207,7 @@ def skillDelete(request, slug):
     if request.method == "POST":
         name = request.POST.get('name')
         skill.delete()
-        messages.success(request, "Your Delete {} is sucessfully!".format(name) )
+        messages.success(request, "Your Deleted is sucessfully!".format(name) )
         return redirect('skill')
     context = {'skill':skill}
     return render(request, 'backend/skill/delete.html', context)
@@ -224,7 +224,7 @@ def galleryPage(request):
         form = GalleryForm(request.POST, request.FILES)
         form.is_valid()
         form.save()
-        messages.success(request, "Your Add Gallery is sucessfully!" )
+        messages.success(request, "Your Added Gallery is sucessfully!" )
         return redirect('gallery')
     context = {'page':page,'forms':forms, 'galleries':galleries, 'abouts':abouts}
     return render(request, 'backend/gallery/gallery.html', context)
@@ -238,7 +238,7 @@ def galleryEdit(request, slug):
         form = GalleryForm(request.POST, request.FILES, instance=gallery)
         if form.is_valid():
             form.save()
-            messages.success(request, "Your Update Gallery is sucessfully!" )
+            messages.success(request, "Your Updated Gallery is sucessfully!" )
             return redirect('gallery')
     context ={'gallery':gallery, 'galleries':galleries, 'forms':forms}
     return render(request, 'backend/gallery/gallery.html', context)
@@ -248,7 +248,7 @@ def galleryDelete(request, slug):
     gallery = Gallery.objects.get(slug=slug)
     if request.method == "POST":
         gallery.delete()
-        messages.success(request, "Your Delete Gallery is sucessfully!")
+        messages.success(request, "Your Deleted Gallery is sucessfully!")
         return redirect('gallery')
     return render(request, 'backend/gallery/delete.html')
 
@@ -275,7 +275,7 @@ def myblogCreate(request):
         form = MyBlogForm(request.POST, request.FILES)
         if form.is_valid():
             form.save()
-            messages.success(request, "Your Add Blog is sucessfully!" )
+            messages.success(request, "Your Added Blog is sucessfully!" )
             return redirect('myblog')
     context = {'forms':forms}
     return render(request, 'backend/myblog/create.html', context)
@@ -288,7 +288,7 @@ def myblogEdit(request, slug):
         form = MyBlogForm(request.POST, request.FILES, instance=blog)
         if form.is_valid():
             form.save()
-            messages.success(request, "Your Edit MyBlog is sucessfully!" )
+            messages.success(request, "Your Edited MyBlog is sucessfully!" )
             return redirect('myblog')
     context = {'blog':blog, 'forms':forms}
     return render(request, 'backend/myblog/edit.html', context)
@@ -298,7 +298,7 @@ def myblogDelete(request, slug):
     blog = MyBlog.objects.get(slug=slug)
     if request.method == "POST":
         blog.delete()
-        messages.success(request, "Your Delete MyBlog is sucessfully!" )
+        messages.success(request, "Your Deleted MyBlog is sucessfully!" )
         return redirect('myblog')
     context = {'blog':blog}
     return render(request, 'backend/myblog/delete.html', context)
@@ -334,7 +334,7 @@ def contactDelete(request, pk):
     contact = Contact.objects.get(id=pk)
     if request.method == "POST":
         contact.delete()
-        messages.success(request, "Your Delete Contact is sucessfully!" )
+        messages.success(request, "Your Deleted Contact is sucessfully!" )
         return redirect('contact')
     context = {'contact':contact}
     return render(request, 'backend/contact/delete.html', context)
