@@ -39,11 +39,11 @@ def homePage(request):
 # Backend start here!!!
 @login_required (login_url='login')
 def indexPage(request):
-    texts = TypeWritter.objects.all()
+    texts = TypeWritter.objects.all()[0:3]
     abouts = About.objects.all()
-    skills = Skill.objects.all()
-    galleries = Gallery.objects.all()
-    blogs = MyBlog.objects.all()
+    skills = Skill.objects.all()[0:3]
+    galleries = Gallery.objects.all()[0:3]
+    blogs = MyBlog.objects.all()[0:3]
     context = {'texts':texts, 'abouts':abouts, 'skills':skills, 'galleries':galleries, 'blogs':blogs}
     return render(request, 'backend/index.html', context)
 
@@ -345,3 +345,11 @@ def contactView(request, pk):
     context = {'contact':contact}
     return render(request, 'backend/contact/view.html', context)
 #Contact Page End here!!!
+
+def search(request):
+    posts = MyBlog.objects.all()
+    if request.method == "GET":
+        search = request.GET.get('search')
+        query_set = posts.filter(Q(title__contains=search) | Q(description__contains=search))
+    context = {'posts':posts, 'query_set':query_set}
+    return render(request, 'frontend/search.html', context)

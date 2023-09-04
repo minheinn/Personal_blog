@@ -49,6 +49,9 @@ urlpatterns = [
     path('contact/', views.contactPage, name="contact"),
     path('contact/<str:pk>/view/', views.contactView, name="contact-view"),
     path('contact/<str:pk>/delete/', views.contactDelete, name="contact-delete"),
+
+    # Search
+    path('search/', views.search, name='search')
 ]
 
 urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
